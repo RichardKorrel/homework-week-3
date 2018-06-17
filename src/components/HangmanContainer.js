@@ -4,6 +4,8 @@ import React, {PureComponent} from 'react'
 import Hangman from './Hangman'
 import { connect } from 'react-redux'
 import { showGuess, wrongGuessCount, isWinner } from '../lib/game'
+// Import the action creators newGame and makeGuess
+import { newGame, makeGuess } from '../actions/game'
 
 class HangmanContainer extends PureComponent {
 
@@ -31,19 +33,16 @@ class HangmanContainer extends PureComponent {
       // Letter already guessed -> ignore the input
       return
 
-    // Dispatch action 'MAKE_GUESS' to the store with the letter input
-    this.props.dispatch({
-      type: 'MAKE_GUESS',
-      payload: letter
-    })
+    // Call action creator makeGuess to add the letter input to the store
+    // state variable lettersGuessed
+    this.props.makeGuess(letter)
+
   }
 
   newGame = () => {
-    // Dispatch the action 'NEW_GAME' to the store with an empty string
-    this.props.dispatch({
-      type: 'NEW_GAME',
-      payload: ''
-    })
+    // Call the action creator newGame to assign a new word and an empty
+    // array to the store state variables wordToGuess and lettersGuessed
+    this.props.newGame()
   }
 
   youWin = (word) => {
@@ -91,4 +90,7 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps)(HangmanContainer)
+// Bind Redux store updates to the function mapStateToProps and
+// bind the action creators newGame and makeGuess
+// so we can use it as props in the HangmanContainer component
+export default connect(mapStateToProps, { newGame, makeGuess }) (HangmanContainer)

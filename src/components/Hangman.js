@@ -14,19 +14,22 @@ export default class Hangman extends React.PureComponent {
     });
   }
 
-  // Handle the submit of the user ipnput
+  // Handle the submit of the user input
   handleSubmit = (event) => {
+    // if user input is null don't do anything
+    if (this.state.userInput === null)
+      return
     event.preventDefault()
-    if (this.state.userInput) {
-      // If no empty input call the guessletter
-      // function with the user input as parameter
-      this.props.guessLetter(
-        this.state.userInput
-      )
-    }
-    else console.log('empty input')
-    // Clear the input field of the guess letter form
-    document.forms["guessletter"].reset();
+
+    // Call the guessletter function with
+    // the user input as parameter
+    this.props.guessLetter(this.state.userInput)
+
+    // Clear the form and userInput value
+    document.forms["guessletter"].reset()
+    this.setState({
+      userInput: ' '
+    });
   }
 
   render() {

@@ -41,7 +41,7 @@ export default class Hangman extends React.PureComponent {
         <form id='guessletter' onSubmit={this.handleSubmit}>
           <label>
             Enter a letter:
-            <input id='input' type="text" name="userInput" value = ' ' onChange={this.handleChange}/>
+            <input id='input' type="text" name="userInput" onChange={this.handleChange}/>
           </label>
           <input id='submit' type="submit" value="Make the guess" />
         </form>
